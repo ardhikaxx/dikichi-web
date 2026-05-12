@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, ArrowRight, Award, MapPin, Plus, X, ChevronLeft, ChevronRight, Zap, ArrowLeft, ArrowUpRight, Heart, Clock } from "lucide-react";
 
 // Skeleton component
 const Skeleton = ({ className }: { className?: string }) => (
@@ -331,9 +331,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 <span className="relative z-10 text-white font-black text-sm tracking-tight flex items-center gap-2 justify-center">
                   PESAN SEKARANG
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <ArrowRight size={16} />
                 </span>
               </button>
 
@@ -346,9 +344,7 @@ export default function Home() {
           <div className="hidden lg:col-span-4 lg:flex justify-end animate-[float_6s_infinite_ease-in-out]">
             <div className="relative w-80 h-[500px] bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[4rem] p-8 flex flex-col justify-between shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)]">
               <div className="w-16 h-16 bg-secondary rounded-3xl flex items-center justify-center shadow-lg shadow-secondary/40">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                </svg>
+                <Award size={40} className="text-white" />
               </div>
               <div>
                 <div className="text-white font-black text-4xl mb-4 leading-none">HOT &<br />CRISPY</div>
@@ -397,9 +393,7 @@ export default function Home() {
 
                     {/* Floating Icon Badge */}
                     <div className="absolute -top-6 -right-2 w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                      </svg>
+                      <Zap size={32} className="text-white" />
                     </div>
 
                     {/* Image Container */}
@@ -441,9 +435,7 @@ export default function Home() {
                           onClick={() => setSelectedImage(src)}
                           className="p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-secondary hover:border-secondary transition-all text-white group/btn"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover/btn:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                          </svg>
+                          <Plus size={20} className="group-hover/btn:scale-125 transition-transform" />
                         </button>
                       </div>
                     </div>
@@ -470,9 +462,7 @@ export default function Home() {
               className="absolute top-6 right-6 z-[110] w-12 h-12 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary transition-all duration-300 group"
               aria-label="Tutup modal"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
             </button>
 
             {/* Left Section: Image & Navigation */}
@@ -486,17 +476,13 @@ export default function Home() {
                   onClick={handlePrevImage}
                   className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
-                  </svg>
+                  <ChevronLeft size={24} />
                 </button>
                 <button 
                   onClick={handleNextImage}
                   className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <ChevronRight size={24} />
                 </button>
               </div>
 
@@ -539,9 +525,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-4 mb-10">
                   <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
                     <div className="w-10 h-10 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
+                      <Zap size={24} />
                     </div>
                     <div>
                       <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-1">Cita Rasa</p>
@@ -550,9 +534,7 @@ export default function Home() {
                   </div>
                   <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
                     <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-white/60 mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
+                      <Clock size={24} />
                     </div>
                     <div>
                       <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-1">Estimasi</p>
@@ -596,10 +578,7 @@ export default function Home() {
 
                   {/* Floating Icon Badge on the Edge */}
                   <div className="absolute -top-6 -right-2 w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                    <MapPin size={32} className="text-white" />
                   </div>
 
                   {/* Status Label (Inside) */}
@@ -624,9 +603,7 @@ export default function Home() {
                   <div className="mt-10 flex items-center justify-between border-t border-white/5 pt-6">
                     <span className="text-[10px] font-black text-white/20 group-hover:text-secondary transition-colors uppercase tracking-[0.2em]">Open in Google Maps</span>
                     <div className="p-3 bg-white/5 rounded-xl border border-white/10 group-hover:bg-secondary group-hover:border-secondary transition-all shadow-lg">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white group-hover:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
+                      <ArrowRight size={20} className="text-white group-hover:scale-125 transition-transform" />
                     </div>
                   </div>
                 </div>
