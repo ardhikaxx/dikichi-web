@@ -70,10 +70,10 @@ export default function Home() {
   }, [selectedImage]);
 
   const menuBoards = [
-    "/assets/menu-board1.png",
-    "/assets/menu-board2.png",
-    "/assets/menu-board3.png",
-    "/assets/menu-board4.png",
+    "/assets/menu-board1.jpg",
+    "/assets/menu-board2.jpg",
+    "/assets/menu-board3.jpg",
+    "/assets/menu-board4.jpg",
   ];
 
   const handlePrevImage = () => {
