@@ -76,6 +76,20 @@ export default function Home() {
     "/assets/menu-board4.png",
   ];
 
+  const handlePrevImage = () => {
+    if (!selectedImage) return;
+    const currentIndex = menuBoards.indexOf(selectedImage);
+    const prevIndex = (currentIndex - 1 + menuBoards.length) % menuBoards.length;
+    setSelectedImage(menuBoards[prevIndex]);
+  };
+
+  const handleNextImage = () => {
+    if (!selectedImage) return;
+    const currentIndex = menuBoards.indexOf(selectedImage);
+    const nextIndex = (currentIndex + 1) % menuBoards.length;
+    setSelectedImage(menuBoards[nextIndex]);
+  };
+
   const selectedBoardNumber = selectedImage ? menuBoards.indexOf(selectedImage) + 1 : null;
 
   const locations = [
@@ -439,107 +453,124 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Image Modal */}
+      {/* Modern Glassmorphism Image Modal with Enhanced Functionality */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center px-2 sm:px-4 py-2 sm:py-6 bg-primary/90 backdrop-blur-xl overflow-x-hidden animate-[fade-in_0.25s_ease-out]"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-md animate-[fade-in_0.3s_ease-out]"
           onClick={() => setSelectedImage(null)}
         >
           <div 
-            className="relative w-full max-w-5xl overflow-hidden rounded-t-[2rem] sm:rounded-[2.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,124,191,0.14),_rgba(86,46,125,0.96)_45%,_rgba(7,7,12,0.98)_100%)] shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.55)] sm:shadow-[0_40px_120px_-25px_rgba(0,0,0,0.85)] animate-[fade-in-up_0.35s_ease-out] max-h-[calc(100dvh-1rem)] sm:max-h-[90vh] overflow-x-hidden"
+            className="relative w-full max-w-6xl h-[95vh] sm:h-[85vh] bg-white/5 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden flex flex-col lg:flex-row shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] animate-[scale-up_0.4s_cubic-bezier(0.16,1,0.3,1)]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 sm:px-8 py-4 sm:py-5">
-              <div className="min-w-0">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-secondary font-bold text-[10px] uppercase tracking-[0.22em]">
-                  Premium selection
-                </div>
-                <p className="mt-3 text-white/50 text-xs uppercase tracking-[0.24em]">
-                  {selectedBoardNumber ? `Board #${selectedBoardNumber}` : "Menu board"}
-                </p>
+            {/* Close Button - Top Right Corner */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 z-[110] w-12 h-12 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary transition-all duration-300 group"
+              aria-label="Tutup modal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Left Section: Image & Navigation */}
+            <div className="relative w-full lg:w-[60%] h-[40%] lg:h-full bg-black/20 flex items-center justify-center p-6 sm:p-12 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
+              {/* Animated Glow Background */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-secondary/20 blur-[120px] rounded-full animate-pulse" />
+              
+              {/* Navigation Arrows */}
+              <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between z-10 pointer-events-none">
+                <button 
+                  onClick={handlePrevImage}
+                  className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button 
+                  onClick={handleNextImage}
+                  className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
 
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="shrink-0 w-11 h-11 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary transition-colors backdrop-blur-sm"
-                aria-label="Tutup modal"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+              <div className="relative w-full h-full">
+                <Image
+                  key={selectedImage}
+                  src={selectedImage}
+                  alt="Menu Detail"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)] transition-all duration-700 animate-[fade-in_0.5s_ease-out]"
+                  priority
+                />
+              </div>
+
+              {/* Board Index Indicator */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/60 text-[10px] font-black tracking-[0.3em] uppercase">
+                Board {selectedBoardNumber} / {menuBoards.length}
+              </div>
             </div>
 
-            <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-              {/* Image Detail Container */}
-              <div className="relative min-h-[36vh] sm:min-h-[48vh] lg:min-h-[72vh] bg-black/20 border-b lg:border-b-0 lg:border-r border-white/10">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-secondary/10" />
-                <div className="relative h-full w-full p-3 sm:p-6 flex items-center justify-center">
-                  <div className="relative h-[32vh] sm:h-[42vh] lg:h-[64vh] w-full">
-                    <Image
-                      src={selectedImage}
-                      alt="Menu Detail"
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                      className="object-contain drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)]"
-                      priority
-                    />
+            {/* Right Section: Content & Actions */}
+            <div className="relative w-full lg:w-[40%] h-[60%] lg:h-full p-8 sm:p-12 flex flex-col overflow-y-auto">
+              <div className="mb-auto">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-black text-[10px] uppercase tracking-[0.2em]">
+                    Best Seller
                   </div>
-                </div>
-              </div>
-
-              {/* Detail Content */}
-              <div className="min-w-0 flex flex-col gap-6 px-4 sm:px-8 py-5 sm:py-8 lg:px-10 lg:py-10 overflow-y-auto overflow-x-hidden max-h-[calc(100dvh-10rem)]">
-                <div className="text-center lg:text-left">
-                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase italic leading-[0.95] tracking-tight">
-                    SIGNATURE <br />
-                    <span className="text-secondary">MENU BOARD</span>
-                  </h3>
-                  <p className="mt-4 text-white/65 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    Tampilan dibuat lebih lapang dan nyaman dibaca di layar kecil maupun besar.
-                    Klik di luar kartu atau tekan <span className="text-white font-semibold">Esc</span> untuk menutup.
-                  </p>
+                  <button className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-secondary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Tampilan</p>
-                    <p className="mt-2 text-sm font-bold text-white">Responsif</p>
+                <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[0.85] uppercase italic tracking-tighter mb-6">
+                  DIKICHI <br />
+                  <span className="text-secondary animate-[text-glow_4s_ease-in-out_infinite]">MENU BOARD</span>
+                </h3>
+
+                <p className="text-white/60 text-lg font-medium leading-relaxed mb-10">
+                  Ayam goreng legendaris dengan resep rahasia yang telah teruji waktu. Kerenyahan di luar, kelembutan di dalam.
+                </p>
+
+                <div className="grid grid-cols-2 gap-4 mb-10">
+                  <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
+                    <div className="w-10 h-10 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-1">Cita Rasa</p>
+                      <p className="text-white font-black text-lg">Pasti Nikmat</p>
+                    </div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Mode</p>
-                    <p className="mt-2 text-sm font-bold text-white">Bottom sheet di mobile</p>
+                  <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
+                    <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-white/60 mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-1">Estimasi</p>
+                      <p className="text-white font-black text-lg">10 - 15 Menit</p>
+                    </div>
                   </div>
                 </div>
-
-                <div className="space-y-3">
-                  <div className="rounded-2xl border border-secondary/20 bg-secondary/10 px-4 py-3">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-secondary font-bold">Highlight</p>
-                    <p className="mt-1 text-sm text-white/80 leading-relaxed">
-                      Layout ini menjaga gambar tetap proporsional dan memberi ruang teks yang cukup tanpa terasa sempit.
-                    </p>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/15 px-4 py-4">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Detail Menu</p>
-                    <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                      Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya.
-                      Setiap potongan dimasak dengan tingkat kematangan sempurna untuk kenikmatan maksimal.
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="mt-auto w-full px-5 py-3.5 bg-secondary text-white rounded-2xl font-black text-sm uppercase tracking-[0.16em] hover:scale-[1.01] transition-transform shadow-lg shadow-secondary/25"
-                >
-                  Tutup detail
-                </button>
               </div>
             </div>
           </div>
         </div>
       )}
+
+
 
 
       {/* Location Section */}
