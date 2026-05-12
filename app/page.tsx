@@ -448,39 +448,66 @@ export default function Home() {
 
       {/* Modern Glassmorphism Image Modal with Enhanced Functionality */}
       {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-black/80 backdrop-blur-md animate-[fade-in_0.3s_ease-out]"
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-6 bg-primary/40 backdrop-blur-xl animate-[fade-in_0.3s_ease-out]"
           onClick={() => setSelectedImage(null)}
         >
-          <div 
-            className="relative w-full max-w-6xl h-[95vh] sm:h-[85vh] bg-white/5 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden flex flex-col lg:flex-row shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] animate-[scale-up_0.4s_cubic-bezier(0.16,1,0.3,1)]"
+          {/* Ambient glow blobs behind modal */}
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/60 rounded-full blur-[120px] pointer-events-none" />
+
+          <div
+            className="relative w-full max-w-6xl h-[95vh] sm:h-[85vh] rounded-[2.5rem] sm:rounded-[3.5rem] overflow-hidden flex flex-col lg:flex-row animate-[scale-up_0.4s_cubic-bezier(0.16,1,0.3,1)]
+              bg-white/[0.04] backdrop-blur-2xl
+              border border-white/10
+              shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(255,255,255,0.05)]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button - Top Right Corner */}
+            {/* Top shine line — liquid glass effect */}
+            <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-10" />
+
+            {/* Close Button */}
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 z-[110] w-12 h-12 rounded-full bg-black/20 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary transition-all duration-300 group"
+              className="absolute top-6 right-6 z-[110] w-12 h-12 rounded-full
+                bg-white/[0.08] backdrop-blur-md border border-white/10
+                flex items-center justify-center text-white
+                hover:bg-secondary/80 hover:border-secondary/60
+                shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+                transition-all duration-300 group"
               aria-label="Tutup modal"
             >
               <X size={24} className="group-hover:rotate-90 transition-transform duration-300" />
             </button>
 
             {/* Left Section: Image & Navigation */}
-            <div className="relative w-full lg:w-[60%] h-[40%] lg:h-full bg-black/20 flex items-center justify-center p-6 sm:p-12 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/10">
-              {/* Animated Glow Background */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-secondary/20 blur-[120px] rounded-full animate-pulse" />
-              
+            <div className="relative w-full lg:w-[60%] h-[40%] lg:h-full flex items-center justify-center p-6 sm:p-12 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/[0.08]">
+              {/* Subtle inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
+              {/* Animated pink glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-secondary/15 blur-[100px] rounded-full animate-pulse pointer-events-none" />
+
               {/* Navigation Arrows */}
               <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between z-10 pointer-events-none">
-                <button 
+                <button
                   onClick={handlePrevImage}
-                  className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
+                  className="w-12 h-12 rounded-2xl
+                    bg-white/[0.08] backdrop-blur-md border border-white/10
+                    flex items-center justify-center text-white
+                    hover:bg-secondary/80 hover:border-secondary/60
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+                    transition-all pointer-events-auto"
                 >
                   <ChevronLeft size={24} />
                 </button>
-                <button 
+                <button
                   onClick={handleNextImage}
-                  className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-secondary transition-all pointer-events-auto shadow-lg"
+                  className="w-12 h-12 rounded-2xl
+                    bg-white/[0.08] backdrop-blur-md border border-white/10
+                    flex items-center justify-center text-white
+                    hover:bg-secondary/80 hover:border-secondary/60
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+                    transition-all pointer-events-auto"
                 >
                   <ChevronRight size={24} />
                 </button>
@@ -499,16 +526,25 @@ export default function Home() {
               </div>
 
               {/* Board Index Indicator */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/60 text-[10px] font-black tracking-[0.3em] uppercase">
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full
+                bg-white/[0.08] backdrop-blur-md border border-white/10
+                shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]
+                text-white/60 text-[10px] font-black tracking-[0.3em] uppercase">
                 Board {selectedBoardNumber} / {menuBoards.length}
               </div>
             </div>
 
-            {/* Right Section: Content & Actions */}
+            {/* Right Section: Content */}
             <div className="relative w-full lg:w-[40%] h-[60%] lg:h-full p-8 sm:p-12 flex flex-col overflow-y-auto">
-              <div className="mb-auto">
+              {/* Subtle inner gradient */}
+              <div className="absolute inset-0 bg-gradient-to-bl from-white/[0.03] to-transparent pointer-events-none" />
+
+              <div className="mb-auto relative z-10">
                 <div className="flex items-center justify-between mb-8">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-black text-[10px] uppercase tracking-[0.2em]">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5
+                    bg-secondary/10 backdrop-blur-md border border-secondary/20
+                    rounded-full text-secondary font-black text-[10px] uppercase tracking-[0.2em]
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
                     Best Seller
                   </div>
                 </div>
@@ -523,7 +559,10 @@ export default function Home() {
                 </p>
 
                 <div className="grid grid-cols-2 gap-4 mb-10">
-                  <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
+                  <div className="p-5 rounded-[2rem]
+                    bg-white/[0.06] backdrop-blur-md border border-white/10
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]
+                    flex flex-col justify-between aspect-square lg:aspect-auto">
                     <div className="w-10 h-10 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary mb-4">
                       <Flame size={24} />
                     </div>
@@ -532,7 +571,10 @@ export default function Home() {
                       <p className="text-white font-black text-lg">Pasti Nikmat</p>
                     </div>
                   </div>
-                  <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
+                  <div className="p-5 rounded-[2rem]
+                    bg-white/[0.06] backdrop-blur-md border border-white/10
+                    shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]
+                    flex flex-col justify-between aspect-square lg:aspect-auto">
                     <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-white/60 mb-4">
                       <Clock size={24} />
                     </div>
