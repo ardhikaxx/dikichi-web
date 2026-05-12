@@ -524,11 +524,6 @@ export default function Home() {
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-black text-[10px] uppercase tracking-[0.2em]">
                     Best Seller
                   </div>
-                  <button className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-secondary transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </button>
                 </div>
 
                 <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[0.85] uppercase italic tracking-tighter mb-6">
