@@ -1,65 +1,588 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["home", "menu", "lokasi", "reservasi"];
+      const scrollPosition = window.scrollY + 200; // Offset for navbar
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuBoards = [
+    "/assets/menu-board1.png",
+    "/assets/menu-board2.png",
+    "/assets/menu-board3.png",
+    "/assets/menu-board4.png",
+  ];
+
+  const locations = [
+    {
+      name: "DIKICHI BANDUNG RIAU",
+      hours: "08.00 - 23.00",
+      address: "LLRE Martadinata St No.162, Merdeka, Bandung",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Bandung+Riau",
+    },
+    {
+      name: "DIKICHI TEGAL",
+      hours: "08.00 - 23.00",
+      address: "44JJ+3GP, Pekauman, Tegal City",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Tegal",
+    },
+    {
+      name: "DIKICHI PURWOKERTO",
+      hours: "08.00 - 23.00",
+      address: "H7P3+6JW, Arcawinangun, Banyumas",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Purwokerto",
+    },
+    {
+      name: "DIKICHI SEMARANG",
+      hours: "08.00 - 23.00",
+      address: "Jl. Majapahit No.311, Gemah, Kota Semarang",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Semarang",
+    },
+    {
+      name: "DIKICHI SURABAYA MAYJEN SUNGKONO",
+      hours: "08.00 - 23.00",
+      address: "PP65+J8V, Surabaya",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Surabaya+Mayjen+Sungkono",
+    },
+    {
+      name: "DIKICHI SURABAYA MERR",
+      hours: "24 Jam",
+      address: "Jl. Dr. Ir. H. Soekarno No.336, Kedung Baruk, Surabaya",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Surabaya+MERR",
+    },
+    {
+      name: "DIKICHI SIDOARJO",
+      hours: "24 Jam",
+      address: "Jl. Teuku Umar, Mangersari, Sidoarjo",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Sidoarjo",
+    },
+    {
+      name: "DIKICHI JEMBER",
+      hours: "08.00 - 23.00",
+      address: "Jl. Gajah Mada No.235A, Kaliwates Kidul, Jember",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Jember",
+    },
+    {
+      name: "DIKICHI BANDUNG",
+      hours: "24 Jam",
+      address: "Jl. Soekarno-Hatta - Terusan Pasirkoja, Babakan, Bandung",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Bandung",
+    },
+    {
+      name: "DIKICHI MOJOKERTO",
+      hours: "08.00 - 23.00",
+      address: "Jl. Raden Wijaya No.11b, Banjaragung, Mojokerto",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Mojokerto",
+    },
+    {
+      name: "DIKICHI TULUNGAGUNG",
+      hours: "08.00 - 23.00",
+      address: "WWH4+WXG, Jl. I Gusti Ngurah Rai, Bago, Tulungagung",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Tulungagung",
+    },
+    {
+      name: "DIKICHI MALANG SOEHAT",
+      hours: "24 Jam",
+      address: "Jl. Soekarno Hatta No.82C, Mojolangu, Kota Malang",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Malang+Soehat",
+    },
+    {
+      name: "DIKICHI MALANG PAHLAWAN TRIP",
+      hours: "08.00 - 23.00",
+      address: "Jl. Pahlawan Trip, Oro-oro Dowo, Kota Malang",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Malang+Pahlawan+Trip",
+    },
+    {
+      name: "DIKICHI MALANG SUPRIADI",
+      hours: "08.00 - 23.00",
+      address: "Jl. S. Supriyadi No.21, Bandungrejosari, Kota Malang",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Malang+Supriadi",
+    },
+    {
+      name: "DIKICHI KEDIRI",
+      hours: "08.00 - 23.00",
+      address: "Jl. Pemuda, Ngadirejo, Kota Kediri",
+      mapLink: "https://www.google.com/maps/search/Dikichi+Kediri",
+    },
+  ];
+
+  const reservations = [
+    { city: "BANDUNG", phone: "08123456789" },
+    { city: "TEGAL", phone: "08123456789" },
+    { city: "PURWOKERTO", phone: "08123456789" },
+    { city: "SEMARANG", phone: "08123456789" },
+    { city: "KEDIRI & TULUNGAGUNG", phone: "08123456789" },
+    { city: "SURABAYA, MOJOKERTO, & SIDOARJO", phone: "08123456789" },
+    { city: "MALANG", phone: "08123456789" },
+    { city: "JEMBER", phone: "08123456789" },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="min-h-screen bg-primary">
+      {/* Navbar */}
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
+        <div className="backdrop-blur-md border border-white/10 rounded-full pl-4 pr-8 py-3 flex justify-between items-center">
+          <div className="relative w-40 h-12">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/assets/logo-dikichi.png"
+              alt="DIKICHI Logo"
+              fill
+              className="object-contain object-left"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <div className="hidden md:flex items-center p-1 relative">
+            {/* Liquid Glass Capsule Highlighter */}
+            <div 
+              className="absolute h-[calc(100%-8px)] rounded-full bg-white/10 border border-white/20 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-0"
+              style={{
+                width: (() => {
+                  const link = [
+                    { id: "home", w: "100px" },
+                    { id: "menu", w: "100px" },
+                    { id: "lokasi", w: "100px" },
+                    { id: "reservasi", w: "130px" },
+                  ].find(l => l.id === activeSection);
+                  return link ? link.w : "100px";
+                })(),
+                left: (() => {
+                  const link = [
+                    { id: "home", left: "4px" },
+                    { id: "menu", left: "104px" },
+                    { id: "lokasi", left: "204px" },
+                    { id: "reservasi", left: "304px" },
+                  ].find(l => l.id === activeSection);
+                  return link ? link.left : "4px";
+                })(),
+              }}
+            />
+            
+            {[
+              { id: "home", label: "Home", w: "100px", left: "4px" },
+              { id: "menu", label: "Menu", w: "100px", left: "104px" },
+              { id: "lokasi", label: "Lokasi", w: "100px", left: "204px" },
+              { id: "reservasi", label: "Reservasi", w: "130px", left: "304px" },
+            ].map((link) => (
+              <button
+                key={link.id}
+                onClick={() => {
+                  setActiveSection(link.id);
+                  const element = document.getElementById(link.id);
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                    window.history.pushState(null, "", `#${link.id}`);
+                  }
+                }}
+                style={{ width: link.w }}
+                className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-mono ${
+                  activeSection === link.id
+                    ? "text-secondary font-black"
+                    : "text-white/40 hover:text-white/80 font-medium"
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
+          <button className="bg-secondary text-white px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition">
+            Pesan Sekarang
+          </button>
         </div>
-      </main>
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 md:pt-36">
+        {/* Dynamic Background Layer */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/assets/background.png"
+            alt="Hero Background"
+            fill
+            className="object-cover scale-110 animate-[zoom-slow_25s_infinite_alternate]"
+            priority
+          />
+          {/* Advanced Gradient Overlay System */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
+          {/* Animated Grid Texture */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        </div>
+
+        {/* Floating Light Elements */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-secondary/30 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute top-1/2 right-0 w-80 h-80 bg-primary/40 rounded-full blur-[120px] animate-[float_12s_infinite_ease-in-out]" />
+
+        <div className="relative z-10 w-full max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Content Column */}
+          <div className="lg:col-span-8 flex flex-col items-start text-left">
+            {/* Tagline Badge */}
+            <div className="inline-flex items-center gap-3 mb-6 px-5 py-2.5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl animate-[slide-in-left_0.8s_ease-out]">
+              <span className="flex h-3 w-3 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+              </span>
+              <span className="text-white font-black text-sm tracking-[0.2em] uppercase">Fried Chicken No.1 di Indonesia</span>
+            </div>
+
+            {/* Main Headline with Kinetic Effects */}
+            <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-black text-white leading-[0.85] tracking-tighter mb-8 animate-[scale-up_1s_ease-out]">
+              PASTI <br />
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-secondary via-pink-300 to-secondary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
+                NIKMAT
+              </span>
+            </h1>
+
+            {/* Hashtag Cloud */}
+            <div className="flex flex-wrap gap-4 mb-2 animate-[fade-in-up_1.2s_ease-out]">
+              {["#PastiSeru", "#PastiNikmat", "#PastiKebeli"].map((tag, i) => (
+                <span key={i} className="text-2xl md:text-3xl font-black italic text-white/40 hover:text-secondary transition-colors cursor-default select-none">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-xl md:text-2xl text-white/60 max-w-xl mb-6 leading-relaxed font-medium animate-[fade-in-up_1.4s_ease-out]">
+              Rasakan kelezatan ayam goreng dengan bumbu rahasia yang meresap hingga ke tulang. Kualitas bintang lima, harga kaki lima.
+            </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-[fade-in_up_1.6s_ease-out]">
+              <button className="group relative px-8 py-4 bg-secondary rounded-[2rem] overflow-hidden transition-all duration-500 hover:scale-105 shadow-[0_15px_30px_-10px_rgba(255,124,191,0.4)]">
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                <span className="relative z-10 text-white font-black text-lg tracking-tight flex items-center gap-2">
+                  PESAN SEKARANG
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </button>
+              
+              <button className="px-8 py-4 bg-white/5 backdrop-blur-md border-2 border-white/10 rounded-[2rem] text-white font-black text-lg tracking-tight hover:bg-white/10 transition-all">
+                LIHAT PROMO
+              </button>
+            </div>
+          </div>
+
+          {/* Right Visual Element Column (Floating Card) */}
+          <div className="hidden lg:col-span-4 lg:flex justify-end animate-[float_6s_infinite_ease-in-out]">
+            <div className="relative w-80 h-[500px] bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[4rem] p-8 flex flex-col justify-between shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)]">
+              <div className="w-16 h-16 bg-secondary rounded-3xl flex items-center justify-center shadow-lg shadow-secondary/40">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-white font-black text-4xl mb-4 leading-none">HOT &<br/>CRISPY</div>
+                <div className="text-white/40 font-bold text-sm tracking-widest uppercase mb-6">Signature Recipe</div>
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-12 h-12 rounded-full border-4 border-primary bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">
+                      {i}
+                    </div>
+                  ))}
+                  <div className="w-12 h-12 rounded-full border-4 border-primary bg-secondary flex items-center justify-center text-xs font-bold text-white">
+                    +1k
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Section */}
+      <section id="menu" className="py-32 px-4 md:px-8 bg-primary relative overflow-hidden">
+        {/* Background Decorative Blobs */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-bold text-xs uppercase tracking-widest">
+            Our Signature Boards
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-20 uppercase tracking-tighter">
+            MENU <span className="text-secondary">MAKANAN</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            {menuBoards.map((src, index) => (
+              <div key={index} className="group relative">
+                {/* Floating Card Container */}
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-6 h-full flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
+                  
+                  {/* Floating Icon Badge */}
+                  <div className="absolute -top-6 -right-2 w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+
+                  {/* Image Container */}
+                  <div className="relative aspect-[3/4] rounded-[2rem] overflow-hidden mb-8 border border-white/5">
+                    <Image
+                      src={src}
+                      alt={`Menu Board ${index + 1}`}
+                      fill
+                      className="object-cover transform transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="mt-auto text-left">
+                    <div className="text-white font-black text-2xl mb-2 leading-none uppercase italic">
+                      BOARD #{index + 1}
+                    </div>
+                    <div className="text-white/40 font-bold text-[10px] tracking-[0.2em] uppercase mb-6">
+                      Chef&apos;s Choice Selection
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      {/* Avatar Group Placeholder */}
+                      <div className="flex -space-x-2">
+                        {[1,2,3].map(i => (
+                          <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white">
+                            {i}
+                          </div>
+                        ))}
+                        <div className="w-8 h-8 rounded-full border-2 border-primary bg-secondary flex items-center justify-center text-[10px] font-bold text-white">
+                          +1k
+                        </div>
+                      </div>
+                      
+                      <button 
+                        onClick={() => setSelectedImage(src)}
+                        className="p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-secondary hover:border-secondary transition-all text-white group/btn"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover/btn:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-primary/40 backdrop-blur-sm animate-[fade-in_0.3s_ease-out]"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div 
+            className="relative w-full max-w-5xl bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[4rem] p-4 md:p-12 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] animate-[scale-up_0.4s_ease-out]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-4 -right-4 w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform z-50"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+              {/* Image Detail Container (Dynamic Width) */}
+              <div className="relative w-fit max-w-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl bg-black/20 flex-shrink-0">
+                <img
+                  src={selectedImage}
+                  alt="Menu Detail"
+                  className="max-h-[50vh] md:max-h-[70vh] w-auto object-contain block"
+                />
+              </div>
+
+              {/* Detail Content */}
+              <div className="flex-1 text-left w-full">
+                <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-secondary/20 border border-secondary/30 rounded-full text-secondary font-bold text-xs uppercase tracking-widest">
+                  Premium Quality
+                </div>
+                <h3 className="text-4xl md:text-6xl font-black text-white mb-6 leading-none italic uppercase">
+                  SIGNATURE <br />
+                  <span className="text-secondary">MENU BOARD</span>
+                </h3>
+                <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-10 font-light">
+                  Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya. Setiap potongan dimasak dengan tingkat kematangan sempurna untuk hasil yang garing di luar dan *juicy* di dalam.
+                </p>
+                <button 
+                  onClick={() => setSelectedImage(null)}
+                  className="w-full md:w-auto px-10 py-5 bg-secondary text-white rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl shadow-secondary/20"
+                >
+                  KEMBALI KE MENU
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Location Section */}
+      <section id="lokasi" className="py-32 px-4 md:px-8 bg-primary relative overflow-hidden">
+        {/* Background Decorative Blobs */}
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] -z-10" />
+
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-bold text-xs uppercase tracking-widest">
+            Visit Our Branches
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-24 uppercase tracking-tighter">
+            LOKASI <span className="text-secondary">DIKICHI</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-x-8 md:gap-y-16">
+            {locations.map((loc, index) => (
+              <Link
+                key={index}
+                href={loc.mapLink}
+                target="_blank"
+                className="group relative"
+              >
+                {/* Floating Card Container */}
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 h-full flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
+                  
+                  {/* Floating Icon Badge on the Edge */}
+                  <div className="absolute -top-6 -right-2 w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+
+                  {/* Status Label (Inside) */}
+                  <div className="flex justify-start mb-6">
+                    <span className={`text-[10px] font-black px-4 py-1.5 rounded-full border tracking-widest uppercase ${loc.hours === '24 Jam' ? 'bg-green-500/20 border-green-500/40 text-green-400' : 'bg-white/5 border-white/10 text-white/50'}`}>
+                      {loc.hours}
+                    </span>
+                  </div>
+
+                  {/* Location Info */}
+                  <div className="flex-1 text-left">
+                    <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight group-hover:text-secondary transition-colors uppercase italic leading-none">
+                      {loc.name}
+                    </h3>
+                    <div className="w-12 h-1 bg-secondary mb-6 rounded-full opacity-30 group-hover:w-20 group-hover:opacity-100 transition-all duration-500" />
+                    <p className="text-white/50 text-base leading-relaxed font-medium group-hover:text-white/80 transition-colors">
+                      {loc.address}
+                    </p>
+                  </div>
+
+                  {/* Bottom Action Footer */}
+                  <div className="mt-10 flex items-center justify-between border-t border-white/5 pt-6">
+                    <span className="text-[10px] font-black text-white/20 group-hover:text-secondary transition-colors uppercase tracking-[0.2em]">Open in Google Maps</span>
+                    <div className="p-3 bg-white/5 rounded-xl border border-white/10 group-hover:bg-secondary group-hover:border-secondary transition-all shadow-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white group-hover:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reservation Section */}
+      <section id="reservasi" className="py-32 px-4 md:px-8 relative overflow-hidden">
+        {/* Background Decorative Blobs */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/5 rounded-full blur-[150px] -z-10" />
+
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-block mb-4 px-4 py-1.5 bg-secondary/10 border border-secondary/20 rounded-full text-secondary font-bold text-xs uppercase tracking-widest">
+            Special Events & Bulk Orders
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tighter">
+            PESAN <span className="text-secondary">BANYAK</span> & RESERVASI
+          </h2>
+          <p className="text-white/50 mb-20 text-lg max-w-2xl mx-auto font-light">
+            Kami siap melayani kebutuhan acara spesial dan pesanan besar Anda dengan kualitas rasa nomor satu.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {reservations.map((res, index) => (
+              <div key={index} className="group relative">
+                {/* Floating Card Container */}
+                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 h-full flex flex-col items-center justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
+                  
+                  {/* Floating Icon Badge */}
+                  <div className="w-16 h-16 bg-secondary/20 border border-secondary/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
+
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-black text-white leading-tight uppercase italic mb-2 tracking-tight group-hover:text-secondary transition-colors">
+                      {res.city}
+                    </h3>
+                    <div className="text-white/30 font-bold text-[10px] tracking-[0.2em] uppercase">
+                      Operational Area
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <div className="flex -space-x-2 justify-center mb-8">
+                      {[1,2,3].map(i => (
+                        <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <button className="w-full py-4 bg-secondary text-white rounded-2xl font-black text-lg tracking-wide hover:scale-105 transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2">
+                      HUBUNGI KAMI
+                    </button>
+                  </div>
+
+                  {/* Decorative Corner Element */}
+                  <div className="absolute bottom-4 right-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                    <div className="w-12 h-12 border-b-2 border-r-2 border-white rounded-br-2xl" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-white/10 text-center text-white/40">
+        <p>© 2026 DIKICHI. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
