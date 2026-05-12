@@ -14,6 +14,7 @@
   --color-secondary: var(--secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-navbar: var(--font-plus-jakarta);
   
   @keyframes zoom-slow {
     from { transform: scale(1); }

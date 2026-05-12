@@ -254,16 +254,16 @@ export default function Home() {
                    }
                  }}
                  style={{ width: link.w }}
-                 className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-sans ${activeSection === link.id
-                     ? "text-secondary font-black"
-                     : "text-white/40 hover:text-white/80 font-medium"
+                 className={`h-10 flex items-center justify-center text-[10px] tracking-[0.25em] uppercase transition-all duration-500 relative z-10 font-[family-name:var(--font-plus-jakarta)] ${activeSection === link.id
+                     ? "text-secondary font-extrabold"
+                     : "text-white/40 hover:text-white/80 font-semibold"
                    }`}
                >
                  {link.label}
                </button>
              ))}
           </div>
-          <button className="bg-secondary text-white px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition">
+          <button className="bg-secondary text-white px-6 py-2 rounded-full font-bold font-[family-name:var(--font-plus-jakarta)] tracking-wide hover:bg-opacity-80 transition text-sm">
             Pesan Sekarang
           </button>
         </div>
