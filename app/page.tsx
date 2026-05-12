@@ -43,12 +43,40 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!selectedImage) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previousOverflowX = document.body.style.overflowX;
+    const previousHtmlOverflowX = document.documentElement.style.overflowX;
+    document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
+    document.documentElement.style.overflowX = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.overflowX = previousOverflowX;
+      document.documentElement.style.overflowX = previousHtmlOverflowX;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage]);
+
   const menuBoards = [
     "/assets/menu-board1.png",
     "/assets/menu-board2.png",
     "/assets/menu-board3.png",
     "/assets/menu-board4.png",
   ];
+
+  const selectedBoardNumber = selectedImage ? menuBoards.indexOf(selectedImage) + 1 : null;
 
   const locations = [
     {
@@ -361,14 +389,16 @@ export default function Home() {
 
                     {/* Image Container */}
                     <div className="relative w-full rounded-[2rem] overflow-hidden mb-8 border border-white/5 bg-black/20 flex items-center justify-center">
-                      <img
+                      <Image
                         src={src}
                         alt={`Menu Board ${index + 1}`}
+                        width={400}
+                        height={533}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                         className="w-full h-auto object-contain transform transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-
 
                     {/* Card Content */}
                     <div className="mt-auto text-left">
@@ -412,50 +442,98 @@ export default function Home() {
       {/* Image Modal */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4 bg-primary/80 backdrop-blur-md animate-[fade-in_0.3s_ease-out]"
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center px-2 sm:px-4 py-2 sm:py-6 bg-primary/90 backdrop-blur-xl overflow-x-hidden animate-[fade-in_0.25s_ease-out]"
           onClick={() => setSelectedImage(null)}
         >
           <div 
-            className="relative w-full max-w-3xl bg-primary md:bg-white/5 backdrop-blur-2xl border-t md:border border-white/10 rounded-t-[2.5rem] md:rounded-[3rem] p-6 md:p-10 shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.5)] md:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] animate-[slide-in-up_0.4s_ease-out] max-h-[85vh] overflow-y-auto"
+            className="relative w-full max-w-5xl overflow-hidden rounded-t-[2rem] sm:rounded-[2.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,124,191,0.14),_rgba(86,46,125,0.96)_45%,_rgba(7,7,12,0.98)_100%)] shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.55)] sm:shadow-[0_40px_120px_-25px_rgba(0,0,0,0.85)] animate-[fade-in-up_0.35s_ease-out] max-h-[calc(100dvh-1rem)] sm:max-h-[90vh] overflow-x-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button 
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 md:-top-4 md:-right-4 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-secondary transition-all z-50 backdrop-blur-sm"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 sm:px-8 py-4 sm:py-5">
+              <div className="min-w-0">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-secondary font-bold text-[10px] uppercase tracking-[0.22em]">
+                  Premium selection
+                </div>
+                <p className="mt-3 text-white/50 text-xs uppercase tracking-[0.24em]">
+                  {selectedBoardNumber ? `Board #${selectedBoardNumber}` : "Menu board"}
+                </p>
+              </div>
 
-            <div className="flex flex-col md:flex-row gap-6 items-center">
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="shrink-0 w-11 h-11 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-white hover:bg-secondary hover:border-secondary transition-colors backdrop-blur-sm"
+                aria-label="Tutup modal"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
               {/* Image Detail Container */}
-              <div className="relative w-full md:w-1/2 rounded-2xl overflow-hidden bg-black/20 flex items-center justify-center p-2">
-                <img
-                  src={selectedImage}
-                  alt="Menu Detail"
-                  className="max-h-[30vh] md:max-h-[50vh] w-auto object-contain block rounded-xl"
-                />
+              <div className="relative min-h-[36vh] sm:min-h-[48vh] lg:min-h-[72vh] bg-black/20 border-b lg:border-b-0 lg:border-r border-white/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-secondary/10" />
+                <div className="relative h-full w-full p-3 sm:p-6 flex items-center justify-center">
+                  <div className="relative h-[32vh] sm:h-[42vh] lg:h-[64vh] w-full">
+                    <Image
+                      src={selectedImage}
+                      alt="Menu Detail"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      className="object-contain drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)]"
+                      priority
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Detail Content */}
-              <div className="flex-1 text-center md:text-left w-full">
-                <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-secondary/20 border border-secondary/30 rounded-full text-secondary font-bold text-[9px] uppercase tracking-widest">
-                  Premium Selection
+              <div className="min-w-0 flex flex-col gap-6 px-4 sm:px-8 py-5 sm:py-8 lg:px-10 lg:py-10 overflow-y-auto overflow-x-hidden max-h-[calc(100dvh-10rem)]">
+                <div className="text-center lg:text-left">
+                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase italic leading-[0.95] tracking-tight">
+                    SIGNATURE <br />
+                    <span className="text-secondary">MENU BOARD</span>
+                  </h3>
+                  <p className="mt-4 text-white/65 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    Tampilan dibuat lebih lapang dan nyaman dibaca di layar kecil maupun besar.
+                    Klik di luar kartu atau tekan <span className="text-white font-semibold">Esc</span> untuk menutup.
+                  </p>
                 </div>
-                <h3 className="text-2xl md:text-4xl font-black text-white mb-3 italic uppercase leading-none">
-                  SIGNATURE <br />
-                  <span className="text-secondary">MENU BOARD</span>
-                </h3>
-                <p className="text-white/60 text-xs md:text-sm leading-relaxed mb-6 font-light max-w-md mx-auto md:mx-0">
-                  Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya. Setiap potongan dimasak dengan tingkat kematangan sempurna untuk kenikmatan maksimal.
-                </p>
-                <button 
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Tampilan</p>
+                    <p className="mt-2 text-sm font-bold text-white">Responsif</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Mode</p>
+                    <p className="mt-2 text-sm font-bold text-white">Bottom sheet di mobile</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-secondary/20 bg-secondary/10 px-4 py-3">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-secondary font-bold">Highlight</p>
+                    <p className="mt-1 text-sm text-white/80 leading-relaxed">
+                      Layout ini menjaga gambar tetap proporsional dan memberi ruang teks yang cukup tanpa terasa sempit.
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-black/15 px-4 py-4">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-white/40">Detail Menu</p>
+                    <p className="mt-2 text-sm text-white/70 leading-relaxed">
+                      Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya.
+                      Setiap potongan dimasak dengan tingkat kematangan sempurna untuk kenikmatan maksimal.
+                    </p>
+                  </div>
+                </div>
+
+                <button
                   onClick={() => setSelectedImage(null)}
-                  className="w-full md:w-auto px-8 py-3 bg-secondary text-white rounded-xl font-black text-sm hover:scale-105 transition-transform shadow-lg shadow-secondary/20"
+                  className="mt-auto w-full px-5 py-3.5 bg-secondary text-white rounded-2xl font-black text-sm uppercase tracking-[0.16em] hover:scale-[1.01] transition-transform shadow-lg shadow-secondary/25"
                 >
-                  TUTUP DETAIL
+                  Tutup detail
                 </button>
               </div>
             </div>
