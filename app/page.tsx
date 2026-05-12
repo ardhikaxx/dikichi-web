@@ -4,9 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+// Skeleton component
+const Skeleton = ({ className }: { className?: string }) => (
+  <div className={`animate-pulse bg-white/5 rounded-2xl ${className}`} />
+);
+
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState("home");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading images/content
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -158,7 +170,7 @@ export default function Home() {
           </div>
           <div className="hidden md:flex items-center p-1 relative">
             {/* Liquid Glass Capsule Highlighter */}
-            <div 
+            <div
               className="absolute h-[calc(100%-8px)] rounded-full bg-white/10 border border-white/20 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-0"
               style={{
                 width: (() => {
@@ -181,7 +193,7 @@ export default function Home() {
                 })(),
               }}
             />
-            
+
             {[
               { id: "home", label: "Home", w: "100px", left: "4px" },
               { id: "menu", label: "Menu", w: "100px", left: "104px" },
@@ -199,11 +211,10 @@ export default function Home() {
                   }
                 }}
                 style={{ width: link.w }}
-                className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-mono ${
-                  activeSection === link.id
+                className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-mono ${activeSection === link.id
                     ? "text-secondary font-black"
                     : "text-white/40 hover:text-white/80 font-medium"
-                }`}
+                  }`}
               >
                 {link.label}
               </button>
@@ -238,20 +249,20 @@ export default function Home() {
         <div className="absolute top-1/2 right-0 w-80 h-80 bg-primary/40 rounded-full blur-[120px] animate-[float_12s_infinite_ease-in-out]" />
 
         <div className="relative z-10 w-full max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Content Column */}
-          <div className="lg:col-span-8 flex flex-col items-start text-left">
+          <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left">
             {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-3 mb-6 px-5 py-2.5 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl animate-[slide-in-left_0.8s_ease-out]">
-              <span className="flex h-3 w-3 relative">
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full animate-[slide-in-left_0.8s_ease-out]">
+              <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
               </span>
-              <span className="text-white font-black text-sm tracking-[0.2em] uppercase">Fried Chicken No.1 di Indonesia</span>
+              <span className="text-white font-black text-[10px] tracking-[0.2em] uppercase">Fried Chicken No.1 di Indonesia</span>
             </div>
 
-            {/* Main Headline with Kinetic Effects */}
-            <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-black text-white leading-[0.85] tracking-tighter mb-8 animate-[scale-up_1s_ease-out]">
+            {/* Main Headline */}
+            <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-black text-white leading-[0.9] tracking-tighter mb-4 animate-[scale-up_1s_ease-out]">
               PASTI <br />
               <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-secondary via-pink-300 to-secondary bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
                 NIKMAT
@@ -259,36 +270,35 @@ export default function Home() {
             </h1>
 
             {/* Hashtag Cloud */}
-            <div className="flex flex-wrap gap-4 mb-2 animate-[fade-in-up_1.2s_ease-out]">
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-4 animate-[fade-in-up_1.2s_ease-out]">
               {["#PastiSeru", "#PastiNikmat", "#PastiKebeli"].map((tag, i) => (
-                <span key={i} className="text-2xl md:text-3xl font-black italic text-white/40 hover:text-secondary transition-colors cursor-default select-none">
+                <span key={i} className="text-lg md:text-2xl font-black italic text-white/40 hover:text-secondary transition-colors cursor-default select-none">
                   {tag}
                 </span>
               ))}
             </div>
 
-            <p className="text-xl md:text-2xl text-white/60 max-w-xl mb-6 leading-relaxed font-medium animate-[fade-in-up_1.4s_ease-out]">
+            <p className="text-sm md:text-lg text-white/60 max-w-lg mb-8 leading-relaxed font-medium animate-[fade-in-up_1.4s_ease-out]">
               Rasakan kelezatan ayam goreng dengan bumbu rahasia yang meresap hingga ke tulang. Kualitas bintang lima, harga kaki lima.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-[fade-in_up_1.6s_ease-out]">
-              <button className="group relative px-8 py-4 bg-secondary rounded-[2rem] overflow-hidden transition-all duration-500 hover:scale-105 shadow-[0_15px_30px_-10px_rgba(255,124,191,0.4)]">
+            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center lg:justify-start animate-[fade-in-up_1.6s_ease-out]">
+              <button className="group relative px-6 py-3 bg-secondary rounded-[1.5rem] overflow-hidden transition-all duration-500 hover:scale-105 shadow-[0_10px_20px_-5px_rgba(255,124,191,0.4)]">
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                <span className="relative z-10 text-white font-black text-lg tracking-tight flex items-center gap-2">
+                <span className="relative z-10 text-white font-black text-sm tracking-tight flex items-center gap-2 justify-center">
                   PESAN SEKARANG
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </span>
               </button>
-              
-              <button className="px-8 py-4 bg-white/5 backdrop-blur-md border-2 border-white/10 rounded-[2rem] text-white font-black text-lg tracking-tight hover:bg-white/10 transition-all">
+
+              <button className="px-6 py-3 bg-white/5 backdrop-blur-md border-2 border-white/10 rounded-[1.5rem] text-white font-black text-sm tracking-tight hover:bg-white/10 transition-all">
                 LIHAT PROMO
               </button>
             </div>
           </div>
-
           {/* Right Visual Element Column (Floating Card) */}
           <div className="hidden lg:col-span-4 lg:flex justify-end animate-[float_6s_infinite_ease-in-out]">
             <div className="relative w-80 h-[500px] bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[4rem] p-8 flex flex-col justify-between shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)]">
@@ -298,10 +308,10 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <div className="text-white font-black text-4xl mb-4 leading-none">HOT &<br/>CRISPY</div>
+                <div className="text-white font-black text-4xl mb-4 leading-none">HOT &<br />CRISPY</div>
                 <div className="text-white/40 font-bold text-sm tracking-widest uppercase mb-6">Signature Recipe</div>
                 <div className="flex -space-x-3">
-                  {[1,2,3,4].map(i => (
+                  {[1, 2, 3, 4].map(i => (
                     <div key={i} className="w-12 h-12 rounded-full border-4 border-primary bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">
                       {i}
                     </div>
@@ -331,64 +341,70 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            {menuBoards.map((src, index) => (
-              <div key={index} className="group relative">
-                {/* Floating Card Container */}
-                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-6 h-full flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
-                  
-                  {/* Floating Icon Badge */}
-                  <div className="absolute -top-6 -right-2 w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                    </svg>
-                  </div>
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="relative h-[400px]">
+                  <Skeleton className="h-full w-full" />
+                </div>
+              ))
+              : menuBoards.map((src, index) => (
+                <div key={index} className="group relative">
+                  {/* Floating Card Container */}
+                  <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-6 h-full flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
 
-                  {/* Image Container */}
-                  <div className="relative aspect-[3/4] rounded-[2rem] overflow-hidden mb-8 border border-white/5">
-                    <Image
-                      src={src}
-                      alt={`Menu Board ${index + 1}`}
-                      fill
-                      className="object-cover transform transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
+                    {/* Floating Icon Badge */}
+                    <div className="absolute -top-6 -right-2 w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                      </svg>
+                    </div>
 
-                  {/* Card Content */}
-                  <div className="mt-auto text-left">
-                    <div className="text-white font-black text-2xl mb-2 leading-none uppercase italic">
-                      BOARD #{index + 1}
+                    {/* Image Container */}
+                    <div className="relative w-full rounded-[2rem] overflow-hidden mb-8 border border-white/5 bg-black/20 flex items-center justify-center">
+                      <img
+                        src={src}
+                        alt={`Menu Board ${index + 1}`}
+                        className="w-full h-auto object-contain transform transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <div className="text-white/40 font-bold text-[10px] tracking-[0.2em] uppercase mb-6">
-                      Chef&apos;s Choice Selection
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      {/* Avatar Group Placeholder */}
-                      <div className="flex -space-x-2">
-                        {[1,2,3].map(i => (
-                          <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white">
-                            {i}
-                          </div>
-                        ))}
-                        <div className="w-8 h-8 rounded-full border-2 border-primary bg-secondary flex items-center justify-center text-[10px] font-bold text-white">
-                          +1k
-                        </div>
+
+
+                    {/* Card Content */}
+                    <div className="mt-auto text-left">
+                      <div className="text-white font-black text-2xl mb-2 leading-none uppercase italic">
+                        BOARD #{index + 1}
                       </div>
-                      
-                      <button 
-                        onClick={() => setSelectedImage(src)}
-                        className="p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-secondary hover:border-secondary transition-all text-white group/btn"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover/btn:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </button>
+                      <div className="text-white/40 font-bold text-[10px] tracking-[0.2em] uppercase mb-6">
+                        Chef&apos;s Choice Selection
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        {/* Avatar Group Placeholder */}
+                        <div className="flex -space-x-2">
+                          {[1, 2, 3].map(i => (
+                            <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white">
+                              {i}
+                            </div>
+                          ))}
+                          <div className="w-8 h-8 rounded-full border-2 border-primary bg-secondary flex items-center justify-center text-[10px] font-bold text-white">
+                            +1k
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setSelectedImage(src)}
+                          className="p-3 bg-white/5 rounded-xl border border-white/10 hover:bg-secondary hover:border-secondary transition-all text-white group/btn"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover/btn:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>
@@ -396,56 +412,57 @@ export default function Home() {
       {/* Image Modal */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-primary/40 backdrop-blur-sm animate-[fade-in_0.3s_ease-out]"
+          className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-4 bg-primary/80 backdrop-blur-md animate-[fade-in_0.3s_ease-out]"
           onClick={() => setSelectedImage(null)}
         >
           <div 
-            className="relative w-full max-w-5xl bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[4rem] p-4 md:p-12 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] animate-[scale-up_0.4s_ease-out]"
+            className="relative w-full max-w-3xl bg-primary md:bg-white/5 backdrop-blur-2xl border-t md:border border-white/10 rounded-t-[2.5rem] md:rounded-[3rem] p-6 md:p-10 shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.5)] md:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] animate-[slide-in-up_0.4s_ease-out] max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button 
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-4 -right-4 w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform z-50"
+              className="absolute top-4 right-4 md:-top-4 md:-right-4 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-secondary transition-all z-50 backdrop-blur-sm"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
 
-            <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-              {/* Image Detail Container (Dynamic Width) */}
-              <div className="relative w-fit max-w-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl bg-black/20 flex-shrink-0">
+            <div className="flex flex-col md:flex-row gap-6 items-center">
+              {/* Image Detail Container */}
+              <div className="relative w-full md:w-1/2 rounded-2xl overflow-hidden bg-black/20 flex items-center justify-center p-2">
                 <img
                   src={selectedImage}
                   alt="Menu Detail"
-                  className="max-h-[50vh] md:max-h-[70vh] w-auto object-contain block"
+                  className="max-h-[30vh] md:max-h-[50vh] w-auto object-contain block rounded-xl"
                 />
               </div>
 
               {/* Detail Content */}
-              <div className="flex-1 text-left w-full">
-                <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-secondary/20 border border-secondary/30 rounded-full text-secondary font-bold text-xs uppercase tracking-widest">
-                  Premium Quality
+              <div className="flex-1 text-center md:text-left w-full">
+                <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 bg-secondary/20 border border-secondary/30 rounded-full text-secondary font-bold text-[9px] uppercase tracking-widest">
+                  Premium Selection
                 </div>
-                <h3 className="text-4xl md:text-6xl font-black text-white mb-6 leading-none italic uppercase">
+                <h3 className="text-2xl md:text-4xl font-black text-white mb-3 italic uppercase leading-none">
                   SIGNATURE <br />
                   <span className="text-secondary">MENU BOARD</span>
                 </h3>
-                <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-10 font-light">
-                  Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya. Setiap potongan dimasak dengan tingkat kematangan sempurna untuk hasil yang garing di luar dan *juicy* di dalam.
+                <p className="text-white/60 text-xs md:text-sm leading-relaxed mb-6 font-light max-w-md mx-auto md:mx-0">
+                  Nikmati kelezatan ayam goreng terbaik dengan resep rahasia yang telah kami jaga kualitasnya. Setiap potongan dimasak dengan tingkat kematangan sempurna untuk kenikmatan maksimal.
                 </p>
                 <button 
                   onClick={() => setSelectedImage(null)}
-                  className="w-full md:w-auto px-10 py-5 bg-secondary text-white rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl shadow-secondary/20"
+                  className="w-full md:w-auto px-8 py-3 bg-secondary text-white rounded-xl font-black text-sm hover:scale-105 transition-transform shadow-lg shadow-secondary/20"
                 >
-                  KEMBALI KE MENU
+                  TUTUP DETAIL
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+
 
       {/* Location Section */}
       <section id="lokasi" className="py-32 px-4 md:px-8 bg-primary relative overflow-hidden">
@@ -471,7 +488,7 @@ export default function Home() {
               >
                 {/* Floating Card Container */}
                 <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 h-full flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
-                  
+
                   {/* Floating Icon Badge on the Edge */}
                   <div className="absolute -top-6 -right-2 w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -531,50 +548,46 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {reservations.map((res, index) => (
-              <div key={index} className="group relative">
-                {/* Floating Card Container */}
-                <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 h-full flex flex-col items-center justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
-                  
-                  {/* Floating Icon Badge */}
-                  <div className="w-16 h-16 bg-secondary/20 border border-secondary/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="relative h-[300px]">
+                  <Skeleton className="h-full w-full" />
+                </div>
+              ))
+              : reservations.map((res, index) => (
+                <div key={index} className="group relative">
+                  {/* Floating Card Container */}
+                  <div className="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 h-full flex flex-col items-center justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-4 hover:shadow-[0_40px_80px_-20px_rgba(255,124,191,0.3)] hover:border-secondary/40">
 
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-black text-white leading-tight uppercase italic mb-2 tracking-tight group-hover:text-secondary transition-colors">
-                      {res.city}
-                    </h3>
-                    <div className="text-white/30 font-bold text-[10px] tracking-[0.2em] uppercase">
-                      Operational Area
+                    {/* Floating Icon Badge */}
+                    <div className="w-16 h-16 bg-secondary/20 border border-secondary/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-7 4m4-4H3" />
+                      </svg>
                     </div>
-                  </div>
 
-                  <div className="w-full">
-                    <div className="flex -space-x-2 justify-center mb-8">
-                      {[1,2,3].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-white">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                      ))}
+                    <div className="text-center mb-8">
+                      <h3 className="text-2xl font-black text-white leading-tight uppercase italic mb-2 tracking-tight group-hover:text-secondary transition-colors">
+                        {res.city}
+                      </h3>
+                      <div className="text-white/30 font-bold text-[10px] tracking-[0.2em] uppercase">
+                        Operational Area
+                      </div>
                     </div>
-                    
-                    <button className="w-full py-4 bg-secondary text-white rounded-2xl font-black text-lg tracking-wide hover:scale-105 transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2">
-                      HUBUNGI KAMI
-                    </button>
-                  </div>
 
-                  {/* Decorative Corner Element */}
-                  <div className="absolute bottom-4 right-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                    <div className="w-12 h-12 border-b-2 border-r-2 border-white rounded-br-2xl" />
+                    <div className="w-full">
+                      <button className="w-full py-4 bg-secondary text-white rounded-2xl font-black text-lg tracking-wide hover:scale-105 transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2">
+                        HUBUNGI KAMI
+                      </button>
+                    </div>
+
+                    {/* Decorative Corner Element */}
+                    <div className="absolute bottom-4 right-4 opacity-10 group-hover:opacity-30 transition-opacity">
+                      <div className="w-12 h-12 border-b-2 border-r-2 border-white rounded-br-2xl" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>
