@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Send, ArrowRight, Award, MapPin, Plus, X, ChevronLeft, ChevronRight, Zap, ArrowLeft, ArrowUpRight, Heart, Clock } from "lucide-react";
+import { Send, ArrowRight, Award, MapPin, Plus, X, ChevronLeft, ChevronRight, Flame, ArrowLeft, ArrowUpRight, Heart, Clock } from "lucide-react";
 
 // Skeleton component
 const Skeleton = ({ className }: { className?: string }) => (
@@ -344,7 +344,7 @@ export default function Home() {
           <div className="hidden lg:col-span-4 lg:flex justify-end animate-[float_6s_infinite_ease-in-out]">
             <div className="relative w-80 h-[500px] bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[4rem] p-8 flex flex-col justify-between shadow-[0_40px_80px_-15px_rgba(0,0,0,0.6)]">
               <div className="w-16 h-16 bg-secondary rounded-3xl flex items-center justify-center shadow-lg shadow-secondary/40">
-                <Award size={40} className="text-white" />
+                <Flame size={40} className="text-white" />
               </div>
               <div>
                 <div className="text-white font-black text-4xl mb-4 leading-none">HOT &<br />CRISPY</div>
@@ -393,7 +393,7 @@ export default function Home() {
 
                     {/* Floating Icon Badge */}
                     <div className="absolute -top-6 -right-2 w-14 h-14 bg-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-secondary/40 z-20 group-hover:scale-110 group-hover:rotate-12 transition-all">
-                      <Zap size={32} className="text-white" />
+                      <Flame size={32} className="text-white" />
                     </div>
 
                     {/* Image Container */}
@@ -525,7 +525,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-4 mb-10">
                   <div className="p-5 rounded-[2rem] bg-white/5 border border-white/10 flex flex-col justify-between aspect-square lg:aspect-auto">
                     <div className="w-10 h-10 rounded-2xl bg-secondary/20 flex items-center justify-center text-secondary mb-4">
-                      <Zap size={24} />
+                      <Flame size={24} />
                     </div>
                     <div>
                       <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mb-1">Cita Rasa</p>
