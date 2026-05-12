@@ -237,31 +237,31 @@ export default function Home() {
               }}
             />
 
-            {[
-              { id: "home", label: "Home", w: "100px", left: "4px" },
-              { id: "menu", label: "Menu", w: "100px", left: "104px" },
-              { id: "lokasi", label: "Lokasi", w: "100px", left: "204px" },
-              { id: "reservasi", label: "Reservasi", w: "130px", left: "304px" },
-            ].map((link) => (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setActiveSection(link.id);
-                  const element = document.getElementById(link.id);
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                    window.history.pushState(null, "", `#${link.id}`);
-                  }
-                }}
-                style={{ width: link.w }}
-                className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-mono ${activeSection === link.id
-                    ? "text-secondary font-black"
-                    : "text-white/40 hover:text-white/80 font-medium"
-                  }`}
-              >
-                {link.label}
-              </button>
-            ))}
+             {[
+               { id: "home", label: "Home", w: "100px", left: "4px" },
+               { id: "menu", label: "Menu", w: "100px", left: "104px" },
+               { id: "lokasi", label: "Lokasi", w: "100px", left: "204px" },
+               { id: "reservasi", label: "Reservasi", w: "130px", left: "304px" },
+             ].map((link) => (
+               <button
+                 key={link.id}
+                 onClick={() => {
+                   setActiveSection(link.id);
+                   const element = document.getElementById(link.id);
+                   if (element) {
+                     element.scrollIntoView({ behavior: "smooth" });
+                     window.history.pushState(null, "", `#${link.id}`);
+                   }
+                 }}
+                 style={{ width: link.w }}
+                 className={`h-10 flex items-center justify-center text-[10px] tracking-[0.3em] uppercase transition-all duration-500 relative z-10 font-sans ${activeSection === link.id
+                     ? "text-secondary font-black"
+                     : "text-white/40 hover:text-white/80 font-medium"
+                   }`}
+               >
+                 {link.label}
+               </button>
+             ))}
           </div>
           <button className="bg-secondary text-white px-6 py-2 rounded-full font-semibold hover:bg-opacity-80 transition">
             Pesan Sekarang
