@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Send } from "lucide-react";
 
 // Skeleton component
 const Skeleton = ({ className }: { className?: string }) => (
@@ -665,9 +666,7 @@ export default function Home() {
 
                     {/* Floating Icon Badge */}
                     <div className="w-16 h-16 bg-secondary/20 border border-secondary/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-7 4m4-4H3" />
-                      </svg>
+                      <Send size={32} className="text-secondary group-hover:text-white" />
                     </div>
 
                     <div className="text-center mb-8">
@@ -679,11 +678,25 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="w-full">
-                      <button className="w-full py-4 bg-secondary text-white rounded-2xl font-black text-lg tracking-wide hover:scale-105 transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2">
-                        HUBUNGI KAMI
-                      </button>
-                    </div>
+                  <div className="w-full">
+                    <Link 
+                      href={
+                        res.city === "BANDUNG" ? "https://wa.me/6281130793318" : 
+                        res.city === "TEGAL" ? "https://wa.me/6281130107474" : 
+                        res.city === "PURWOKERTO" ? "https://wa.me/6281130107575" : 
+                        res.city === "SEMARANG" ? "https://wa.me/6281130799322" : 
+                        res.city === "KEDIRI & TULUNGAGUNG" ? "http://wa.me/6281252365650" : 
+                        res.city === "SURABAYA, MOJOKERTO, & SIDOARJO" ? "https://wa.me/6282313133433" : 
+                        res.city === "MALANG" ? "https://wa.me/6282142156060" : 
+                        res.city === "JEMBER" ? "https://wa.me/6281130774449" : 
+                        "#"
+                      } 
+                      target="_blank"
+                      className="w-full py-4 bg-secondary text-white rounded-2xl font-black text-lg tracking-wide hover:scale-105 transition-transform shadow-xl shadow-secondary/20 flex items-center justify-center gap-2"
+                    >
+                      HUBUNGI KAMI
+                    </Link>
+                  </div>
 
                     {/* Decorative Corner Element */}
                     <div className="absolute bottom-4 right-4 opacity-10 group-hover:opacity-30 transition-opacity">
